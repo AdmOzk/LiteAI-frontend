@@ -1,0 +1,110 @@
+<section class="page-actions">
+  <a routerLink="/patients" class="ghost">← Back to list</a>
+  <a *ngIf="patient() as patientRecord" [routerLink]="['/patients', patientRecord.id, 'edit']" class="ghost">
+    Update patient
+  </a>
+  <a routerLink="/patients/new" class="primary">Add Patient</a>
+</section>
+
+<section class="grid" *ngIf="patient() as patient">
+  <div class="card profile">
+    <div class="avatar">{{ initials() }}</div>
+    <div>
+      <p class="eyebrow">Patient</p>
+      <h1>{{ patient.firstName }} {{ patient.lastName }}</h1>
+      <p class="lede">Born {{ patient.birthDate | date }}</p>
+    </div>
+    <div class="remark">
+      <p class="eyebrow">Doctor remarks</p>
+      <p>{{ patient.doctorRemarks || 'No remarks yet.' }}</p>
+    </div>
+  </div>
+
+  <div class="card ai">
+    <div class="card-header">
+      <div>
+        <p class="eyebrow">AI-supported prediction</p>
+        <h2>Care summary</h2>
+      </div>
+      <div class="card-actions">
+        <button class="ghost" type="button" (click)="refreshPrediction()" [disabled]="aiLoading() || !patient">
+          {{ aiLoading() ? 'Contacting AI…' : prediction() ? 'Refresh mock AI call' : 'Run mock AI call' }}
+        </button>
+        <span class="risk" *ngIf="prediction() as prediction" [class]="riskTone(prediction.riskLevel)">
+          {{ prediction.riskLevel | titlecase }} risk
+          <ng-container *ngIf="prediction.riskScore !== undefined">
+            · {{ (prediction.riskScore * 100) | number: '1.0-0' }}%
+          </ng-container>
+        </span>
+      </div>
+    </div>
+    <ng-container *ngIf="prediction() as prediction; else aiPlaceholder">
+      <p class="lede">{{ prediction.summary }}</p>
+      <ul>
+        <li *ngFor="let rec of prediction.recommendations">{{ rec }}</li>
+      </ul>
+    </ng-container>
+    <ng-template #aiPlaceholder>
+      <p class="lede muted">No AI summary yet. Trigger the mock call when you're ready.</p>
+    </ng-template>
+  </div>
+
+  <div class="card history">
+    <div class="card-header">
+      <div>
+        <p class="eyebrow">Historical records</p>
+        <h2>Timeline</h2>
+      </div>
+      <button
+        class="primary"
+        type="submit"
+        form="historyForm"
+        [disabled]="historyForm.invalid || savingHistory()"
+      >
+        {{ savingHistory() ? 'Saving…' : 'Save record' }}
+      </button>
+    </div>
+    <form id="historyForm" class="history-form" [formGroup]="historyForm" (ngSubmit)="addHistoryEntry()" novalidate>
+      <label class="field">
+        <span>Title</span>
+        <input type="text" formControlName="title" placeholder="Follow-up note" maxlength="120" />
+        <small *ngIf="historyForm.controls.title.touched && historyForm.controls.title.invalid">
+          Title is required.
+        </small>
+      </label>
+
+      <label class="field">
+        <span>Description</span>
+        <textarea
+          formControlName="description"
+          rows="3"
+          placeholder="Add exam results, prescriptions, or follow-up notes"
+          maxlength="500"
+        ></textarea>
+        <small *ngIf="historyForm.controls.description.touched && historyForm.controls.description.invalid">
+          Description is required.
+        </small>
+      </label>
+
+      <label class="field inline">
+        <span>Recorded at</span>
+        <input type="datetime-local" formControlName="recordedAt" />
+      </label>
+    </form>
+    <p class="status error" *ngIf="historyError()">{{ historyError() }}</p>
+    <div class="history-list" *ngIf="history().length; else emptyHistory">
+      <div class="history-item" *ngFor="let item of history()">
+        <div>
+          <p class="eyebrow">{{ item.recordedAt | date: 'medium' }}</p>
+          <p class="history-title">{{ item.title }}</p>
+          <p class="history-description">{{ item.description }}</p>
+        </div>
+      </div>
+    </div>
+    <ng-template #emptyHistory>
+      <p class="status">No history records available.</p>
+    </ng-template>
+  </div>
+</section>
+
+<p class="status" *ngIf="loading()">Loading patient details…</p>

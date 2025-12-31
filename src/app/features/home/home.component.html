@@ -1,0 +1,44 @@
+<section class="hero">
+  <div class="badge">Cloud AI patient tracking system</div>
+  <h1>
+    AI-powered patient tracking system
+    <span class="highlight">built for clinical teams</span>
+  </h1>
+  <p class="lede">
+    Monitor patient progress, catch risk signals early, and coordinate care from one intelligent
+    workspace designed for healthcare providers.
+  </p>
+  <div class="actions">
+    <button class="primary" type="button" (click)="navigateProtected('/patients')">
+      Manage patients
+    </button>
+    <button class="secondary" type="button" (click)="navigateProtected('/patients')">
+      List patients
+    </button>
+    <button class="ghost" type="button" (click)="navigateProtected('/patients/new')">
+      Create patient
+    </button>
+  </div>
+  <div class="status" *ngIf="!isAuthenticated()">
+    <span class="dot"></span>
+    Sign in is required to access patient records.
+  </div>
+</section>
+
+<section class="grid">
+  <article class="card">
+    <div class="icon">⚡</div>
+    <h2>Smart triage</h2>
+    <p>AI insights highlight unstable vitals and symptom changes the moment they are recorded.</p>
+  </article>
+  <article class="card">
+    <div class="icon">🔒</div>
+    <h2>Secure by default</h2>
+    <p>Role-aware access, encrypted storage, and audit trails keep sensitive health data safe.</p>
+  </article>
+  <article class="card">
+    <div class="icon">🤝</div>
+    <h2>Team ready</h2>
+    <p>Coordinate across clinicians with shared task lists, notes, and next-step reminders.</p>
+  </article>
+</section>

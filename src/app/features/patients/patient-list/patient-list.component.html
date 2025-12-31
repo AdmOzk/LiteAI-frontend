@@ -1,0 +1,45 @@
+<section class="page-header">
+  <div>
+    <p class="eyebrow">Patients</p>
+    <h1>Clinical roster</h1>
+    <p class="lede">First name, last name, birthdate with quick actions to view history or manage records.</p>
+  </div>
+  <a class="primary" routerLink="/patients/new">Add New Patient</a>
+</section>
+
+<section class="card">
+  <header class="card-header">
+    <div>
+      <p class="eyebrow">Overview</p>
+      <h2>Patient list</h2>
+    </div>
+    <button class="ghost" type="button" (click)="refresh()">Refresh</button>
+  </header>
+
+  <div class="status" *ngIf="loading()">Loading patients…</div>
+  <div class="status error" *ngIf="error()">{{ error() }}</div>
+
+  <div class="table" *ngIf="hasPatients() && !loading()">
+    <div class="table-header">
+      <span>First name</span>
+      <span>Last name</span>
+      <span>Birthdate</span>
+      <span>Actions</span>
+    </div>
+    <div class="table-row" *ngFor="let patient of patients()">
+      <span>{{ patient.firstName }}</span>
+      <span>{{ patient.lastName }}</span>
+      <span>{{ patient.birthDate | date }}</span>
+      <div class="actions">
+        <a [routerLink]="['/patients', patient.id]" class="pill">View</a>
+        <a [routerLink]="['/patients', patient.id, 'edit']" class="pill">Edit</a>
+        <button type="button" class="danger" (click)="delete(patient)">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="empty" *ngIf="!hasPatients() && !loading()">
+    <p>No patients yet. Create one to begin tracking.</p>
+    <a routerLink="/patients/new" class="primary">Create patient</a>
+  </div>
+</section>

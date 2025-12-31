@@ -1,0 +1,23 @@
+<header class="topbar">
+  <div class="brand">
+    <div class="brand-mark">AI</div>
+    <div>
+      <div class="brand-title">AI Patient Tracker</div>
+      <div class="brand-subtitle">AI-Supported Clinical Monitoring</div>
+    </div>
+  </div>
+  <div class="nav">
+    <ng-container *ngIf="authService.isAuthenticated(); else signedOutNav">
+      <a routerLink="/patients" routerLinkActive="active" aria-label="Patients">Patients</a>
+      <button class="ghost" type="button" (click)="logout()">Logout</button>
+    </ng-container>
+    <ng-template #signedOutNav>
+      <a class="primary" routerLink="/login" routerLinkActive="active" aria-label="Sign in">
+        Sign in
+      </a>
+    </ng-template>
+  </div>
+</header>
+<main class="page">
+  <router-outlet></router-outlet>
+</main>

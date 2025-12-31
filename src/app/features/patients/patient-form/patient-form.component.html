@@ -1,0 +1,67 @@
+<section class="card form-card">
+  <header class="card-header">
+    <div>
+      <p class="eyebrow">{{ editing() ? 'Update Patient' : 'Create Patient' }}</p>
+      <h1>{{ editing() ? 'Edit patient details' : 'Add a new record' }}</h1>
+      <p class="lede">
+        {{
+          editing()
+            ? 'Revise the patient record and save changes with a single update call.'
+            : 'Capture first name, last name, birthdate, and optional remarks to onboard a patient.'
+        }}
+      </p>
+    </div>
+  </header>
+
+  <p class="status" *ngIf="loading()">Loading patient details…</p>
+
+  <form [formGroup]="form" (ngSubmit)="submit()" class="form-grid" novalidate>
+    <label class="field">
+      <span>First name</span>
+      <input type="text" formControlName="firstName" placeholder="Jane" [disabled]="loading()" />
+      <small *ngIf="form.controls.firstName.touched && form.controls.firstName.invalid">
+        First name is required.
+      </small>
+    </label>
+
+    <label class="field">
+      <span>Last name</span>
+      <input type="text" formControlName="lastName" placeholder="Doe" [disabled]="loading()" />
+      <small *ngIf="form.controls.lastName.touched && form.controls.lastName.invalid">
+        Last name is required.
+      </small>
+    </label>
+
+    <label class="field">
+      <span>Birthdate</span>
+      <input type="date" formControlName="birthDate" [disabled]="loading()" />
+      <small *ngIf="form.controls.birthDate.touched && form.controls.birthDate.invalid">
+        Birthdate is required.
+      </small>
+    </label>
+
+    <label class="field">
+      <span>Doctor remarks (optional)</span>
+      <textarea
+        formControlName="doctorRemarks"
+        placeholder="Notes about allergies or past visits"
+        [disabled]="loading()"
+      ></textarea>
+    </label>
+
+    <div class="actions">
+      <button
+        class="ghost"
+        type="button"
+        [routerLink]="editing() && patientId() ? ['/patients', patientId()] : '/patients'"
+        [disabled]="submitting()"
+      >
+        Cancel
+      </button>
+      <button class="primary" type="submit" [disabled]="submitting() || loading()">
+        {{ submitting() ? 'Saving…' : editing() ? 'Update patient' : 'Save patient' }}
+      </button>
+    </div>
+    <p class="status error" *ngIf="error()">{{ error() }}</p>
+  </form>
+</section>

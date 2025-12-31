@@ -1,0 +1,98 @@
+.card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 1.25rem;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.card-header {
+  margin-bottom: 1rem;
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  color: #2563eb;
+  margin: 0;
+}
+
+.lede {
+  color: #475569;
+  margin: 0.25rem 0 0;
+}
+
+.form-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.field input,
+.field textarea {
+  padding: 0.8rem 0.9rem;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.15s ease;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: #4338ca;
+  box-shadow: 0 0 0 4px rgba(67, 56, 202, 0.12);
+}
+
+.field small {
+  color: #dc2626;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.primary,
+.ghost {
+  border-radius: 10px;
+  font-weight: 700;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.75rem 1.1rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.primary {
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(79, 70, 229, 0.18);
+}
+
+.ghost {
+  background: #f8fafc;
+  color: #1f2937;
+  border: 1px solid #e2e8f0;
+}
+
+.primary:hover,
+.ghost:hover {
+  transform: translateY(-1px);
+}
+
+.status.error {
+  color: #dc2626;
+  margin: 0;
+}

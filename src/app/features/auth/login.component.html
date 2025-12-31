@@ -1,0 +1,42 @@
+<section class="auth-layout">
+  <div class="hero">
+    <p class="eyebrow">AI-Supported Patient Tracking Platform</p>
+    <h1>AI-Supported digital solutions<span> for healthcare</span>.</h1>
+    <p class="lede">
+      This Lite project helps clinicians view patient records, review histories, and surface AI insights quickly.
+      Sign in to start monitoring.
+    </p>
+  </div>
+
+  <form class="card" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <div class="card-header">
+      <div>
+        <p class="eyebrow">Secure Access</p>
+        <h2>Sign in with your clinician account</h2>
+      </div>
+      <div class="status-chip">JWT</div>
+    </div>
+
+    <label class="field">
+      <span>Email</span>
+      <input type="email" formControlName="email" placeholder="you@example.com" />
+      <small *ngIf="form.controls.email.touched && form.controls.email.invalid">Enter a valid email.</small>
+    </label>
+
+    <label class="field">
+      <span>Password</span>
+      <input type="password" formControlName="password" placeholder="••••••••" />
+      <small *ngIf="form.controls.password.touched && form.controls.password.invalid">
+        Password is required.
+      </small>
+    </label>
+
+    <button class="primary" type="submit" [disabled]="submitting()">{{ submitting() ? 'Signing in…' : 'Login' }}</button>
+    <p class="error" *ngIf="error()">{{ error() }}</p>
+    <p class="hint">Users who are not logged in cannot access patient data.</p>
+    <div class="secondary-action">
+      <span>No account?</span>
+      <a routerLink="/register" class="ghost">Register</a>
+    </div>
+  </form>
+</section>

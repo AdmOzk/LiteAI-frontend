@@ -1,0 +1,76 @@
+<section class="auth-layout">
+  <div class="hero">
+    <p class="eyebrow">Account onboarding</p>
+    <h1>Create your clinician access to <span>AI Patient Tracker</span>.</h1>
+    <p class="lede">
+      Set up a secure account to review patient timelines and request AI-supported insights when needed.
+    </p>
+    <div class="project-meta">
+      <div>
+        <div class="meta-title">Access level</div>
+        <div class="meta-value">Clinician-only workspace</div>
+      </div>
+      <div>
+        <div class="meta-title">Security</div>
+        <div class="meta-value">Email & password authentication</div>
+      </div>
+    </div>
+  </div>
+
+  <form class="card" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <div class="card-header">
+      <div>
+        <p class="eyebrow">Create account</p>
+        <h2>Register to manage patient records</h2>
+      </div>
+      <div class="status-chip">New</div>
+    </div>
+
+    <div class="name-row">
+      <label class="field">
+        <span>First name</span>
+        <input type="text" formControlName="firstName" placeholder="Dr. Jane" />
+        <small *ngIf="form.controls.firstName.touched && form.controls.firstName.invalid">
+          First name is required.
+        </small>
+      </label>
+
+      <label class="field">
+        <span>Last name</span>
+        <input type="text" formControlName="lastName" placeholder="Doe" />
+        <small *ngIf="form.controls.lastName.touched && form.controls.lastName.invalid">
+          Last name is required.
+        </small>
+      </label>
+    </div>
+
+    <label class="field">
+      <span>Email</span>
+      <input type="email" formControlName="email" placeholder="you@example.com" />
+      <small *ngIf="form.controls.email.touched && form.controls.email.invalid">Enter a valid email.</small>
+    </label>
+
+    <label class="field">
+      <span>Password</span>
+      <input type="password" formControlName="password" placeholder="••••••••" />
+      <small *ngIf="form.controls.password.touched && form.controls.password.invalid">
+        Password must be at least 6 characters.
+      </small>
+    </label>
+
+    <label class="field">
+      <span>Confirm password</span>
+      <input type="password" formControlName="confirmPassword" placeholder="••••••••" />
+      <small *ngIf="form.controls.confirmPassword.touched && form.controls.confirmPassword.invalid">
+        Please confirm your password.
+      </small>
+    </label>
+
+    <button class="primary" type="submit" [disabled]="submitting()">{{ submitting() ? 'Creating…' : 'Register' }}</button>
+    <p class="error" *ngIf="error()">{{ error() }}</p>
+    <div class="secondary-action">
+      <span>Already have an account?</span>
+      <a routerLink="/login" class="ghost">Back to login</a>
+    </div>
+  </form>
+</section>
